@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html ng-app="rescueApp">
+
+<head>
+
+    <title>RescueConnect</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #eeeeee;
+        }
+
+        .box {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        input, select {
+            width: 95%;
+            margin: 5px;
+            padding: 10px;
+            
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+    </style>
+
+</head>
+
+
+<body ng-controller="MainController">
+
+<div class="box">
+
+
+    <!-- LOGIN PAGE -->
+
+    <div ng-show="page == 'login'">
+
+        <h1>RescueConnect</h1>
+
+        <h2>Login</h2>
+
+        <input
+            type="text"
+            ng-model="username"
+            placeholder="Username">
+
+        <input
+            type="password"
+            ng-model="password"
+            placeholder="Password">
+
+        <button ng-click="login()">
+            Login
+        </button>
+
+        <p class="error" ng-if="error">
+            Wrong username or password
+        </p>
+
+        <p>
+            Username: admin<br>
+            Password: 1234
+        </p>
+
+    </div>
+
+
+    <!-- VOLUNTEER PAGE -->
+
+    <div ng-show="page == 'volunteers'">
+
+        <rescue-title></rescue-title>
+
+        <h2>Volunteer Management</h2>
+
+        <button ng-click="logout()">
+            Logout
+        </button>
+
+        <hr>
+
+
+        <!-- SEARCH -->
+
+        <input
+            type="text"
+            ng-model="search"
+            placeholder="Search volunteer">
+
+
+        <!-- ADD VOLUNTEER -->
+
+        <h3>Add Volunteer</h3>
+
+        <input
+            type="text"
+            ng-model="newVolunteer.name"
+            placeholder="Name">
+
+        <input
+            type="text"
+            ng-model="newVolunteer.city"
+            placeholder="City">
+
+        <select ng-model="newVolunteer.experience">
+
+            <option value="">
+                Select Experience
+            </option>
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Experienced">
+                Experienced
+            </option>
+
+        </select>
+
+        <button ng-click="addVolunteer()">
+            Add Volunteer
+        </button>
+
+
+        <p class="success" ng-if="message">
+            {{message}}
+        </p>
+
+
+        <!-- TABLE -->
+
+        <table>
+
+            <tr>
+
+                <th>Name</th>
+                <th>City</th>
+                <th>Experience</th>
+
+            </tr>
+
+            <tr ng-repeat="v in volunteers | filter:search">
+
+                <td>{{v.name}}</td>
+                <td>{{v.city}}</td>
+                <td>{{v.experience}}</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
